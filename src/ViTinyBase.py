@@ -52,7 +52,7 @@ class MSA(nn.Module):
 
         self.layer_norm = nn.LayerNorm(dim)
 
-        self.qkv = nn.Linear(dim, total_head_dim, bias=False)
+        self.qkv = nn.Linear(dim, 3 * total_head_dim, bias=False)
         self.msa_out = nn.Linear(total_head_dim, dim, bias=False)
 
         self.softmax = nn.Softmax(dim=-1)
@@ -104,7 +104,7 @@ class Transformer(nn.Module):
 
 
 class ViTinyBase(nn.Module):
-    def __init__(self, image_size, patch_size, num_classes, dim, depth, mlp_dim, head_count=4, head_dim=16, channels=3):
+    def __init__(self, image_size, patch_size, num_classes, depth, dim, mlp_dim, head_count=4, head_dim=16, channels=3):
         super().__init__()
 
         height, width = image_size
