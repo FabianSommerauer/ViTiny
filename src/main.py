@@ -1,16 +1,11 @@
 import os
-
-import torch.nn
+import matplotlib.pyplot as plt
 import torch.utils.data
-import torch.optim
 import torchvision
 import torchvision.transforms as transforms
-import matplotlib.pyplot as plt
-import numpy as np
 from einops import rearrange
 
 from ViTinyBase import ViTinyBase
-
 
 # torch.backends.cuda.matmul.allow_tf32 = True
 # torch.backends.cudnn.allow_tf32 = True
@@ -23,6 +18,7 @@ normalize_images = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 ])
+
 
 def imshow(img, label=None):
     img = img / 2 + 0.5
@@ -65,7 +61,7 @@ if __name__ == '__main__':
     # model.to(cuda0)
 
     loss_func = torch.nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(model.parameters())   # todo: test NAdam
+    optimizer = torch.optim.Adam(model.parameters())  # todo: test NAdam
 
     for epoch in range(EPOCHS):
         running_loss = 0.0
@@ -85,13 +81,9 @@ if __name__ == '__main__':
 
             # print statistics
             running_loss += loss.item()
-            if i % 2000 == 1999:    # print every 2000 mini-batches
+            if i % 2000 == 1999:  # print every 2000 mini-batches
                 print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 2000:.3f}')
                 running_loss = 0.0
 
-    MODELS_FOLDER = './models'
-    os.makedirs(MODELS_FOLDER, exist_ok=True)
     torch.save(model.state_dict(), os.path.join(MODELS_FOLDER, 'cifar_vitiny.pth'))
     print('Finished Training')
-
-
