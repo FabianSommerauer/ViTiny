@@ -127,8 +127,7 @@ class ViTinyBase(nn.Module):
         self.out = nn.Sequential(
             nn.LayerNorm(dim),
             nn.Linear(dim, num_classes),
-            # todo: remove softmax if we need output for something else than classification (e.g. for Masked pre-training)
-            nn.Softmax(dim=-1)
+            # no softmax here, since loss already computes a softmax internally
         )
 
     def forward(self, img):
