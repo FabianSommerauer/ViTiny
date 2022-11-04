@@ -113,7 +113,7 @@ class ViTinyBase(nn.Module):
         assert height % patch_height == 0 and width % patch_width == 0, \
             'Image dimensions must be divisible by the patch size.'
 
-        patch_count = (width // patch_width) * (height // patch_height)
+        # patch_count = (width // patch_width) * (height // patch_height)
         patch_size = channels * patch_width * patch_height
 
         self.embed_image = nn.Sequential(
